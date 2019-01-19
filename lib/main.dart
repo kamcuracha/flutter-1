@@ -7,43 +7,47 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'My first flutter app',
-      home: new HomePage(title: 'Home Page')
+      title: 'Startup Name Generator',
+      home: RandomWords(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  final String title;
-
-  HomePage({ this.title });
+class RandomWordsState extends State < RandomWords > {
+  final _suggestions = < WordPair > [];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text(this.title)),
-      body: new HelloFlutterText()
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Startup Name Generator'),
+      ),
+      body: _buildSuggestions(),
     );
   }
-}
 
-class HelloFlutterText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return new Center(
-      child: RandomWords(),
+  Widget _buildSuggestions() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
+
+          final index = i~/ 2;
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10));
+          }
+          return _buildRow(_suggestions[index]);
+        }
     );
   }
-}
 
-class RandomWordsState extends State<RandomWords> {
-  @override
-  Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return Text(wordPair.asPascalCase,
-      textDirection: TextDirection.ltr,
-      style: new TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold)
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
     );
   }
 }
