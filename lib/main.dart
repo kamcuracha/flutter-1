@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,8 +30,9 @@ class HomePage extends StatelessWidget {
 class HelloFlutterText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
     return new Center(
-      child: new Text('Hello Flutter!',
+      child: new Text(wordPair.asPascalCase,
         textDirection: TextDirection.ltr,
         style: new TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold))
     );
