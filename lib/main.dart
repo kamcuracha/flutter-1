@@ -32,9 +32,23 @@ class HelloFlutterText extends StatelessWidget {
   Widget build(BuildContext context) {
     final wordPair = WordPair.random();
     return new Center(
-      child: new Text(wordPair.asPascalCase,
-        textDirection: TextDirection.ltr,
-        style: new TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold))
+      child: RandomWords(),
     );
   }
+}
+
+class RandomWordsState extends State<RandomWords> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+    return Text(wordPair.asPascalCase,
+      textDirection: TextDirection.ltr,
+      style: new TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold)
+    );
+  }
+}
+
+class RandomWords extends StatefulWidget {
+  @override
+  RandomWordsState createState() => new RandomWordsState();
 }
